@@ -1,14 +1,15 @@
-import { Text, Pressable, StyleSheet } from 'react-native';
+import { Text, Pressable, PressableProps, StyleSheet } from 'react-native';
 import { Colors, FZ, FW, Radius } from '../../tokens';
 
-type Props = {
-    title: string,
-}
 
-export function Button ({title}: Props) {
+
+export function Button({ title, ...props }: PressableProps & { title: string }) {
 
     return (
-        <Pressable style={styles.button}>
+        <Pressable 
+            style={styles.button}
+            {...props}
+        >
             <Text style={styles.text}>{title}</Text>
         </Pressable>
     );

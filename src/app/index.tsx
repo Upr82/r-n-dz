@@ -8,10 +8,10 @@ export default function HomeScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image 
-                    style={styles.image} 
+                <Image
+                    style={styles.image}
                     source={require('../../assets/main_img.png')}
-                    
+
                 />
             </View>
             <View style={styles.content}>
@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         position: 'absolute',
-        bottom: '33%'
+        bottom: '33%',
+        flex: 1
     },
     image: {
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     }
-    
+
 });

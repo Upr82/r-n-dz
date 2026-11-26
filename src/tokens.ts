@@ -15,10 +15,7 @@ export const FZ = {
     fz14: 14
 };
 
-export const FW = {
-    fw600: "600",
-    fw400: "400",
-};
+export const FW = { fw600: '600', fw400: '400' } as const;
 
 export const Radius = {
     r10: 10,
