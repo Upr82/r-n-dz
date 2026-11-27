@@ -1,16 +1,49 @@
-import { Text, Pressable, PressableProps, StyleSheet } from 'react-native';
+import {
+    Text, Pressable, PressableProps, StyleSheet,
+    Animated, View,
+    GestureResponderEvent
+} from 'react-native';
+import React, { useEffect } from 'react';
 import { Colors, FZ, FW, Radius } from '../../tokens';
 
 
 
 export function Button({ title, ...props }: PressableProps & { title: string }) {
 
+    const animatedValue = new Animated.Value(0);
+    const color = animatedValue.interpolate({
+        inputRange: [0, 100],
+        outputRange: [Colors.orange, Colors.orangeDark]
+    });
+
+    const fadeIn = (e: GestureResponderEvent) => {
+        Animated.timing(animatedValue, {
+                toValue: 100,
+                duration: 100,
+                useNativeDriver: false
+            }
+        ).start();
+        props.onPressIn && props.onPressIn(e);
+    }
+    const fadeOut = (e: GestureResponderEvent) => {
+        Animated.timing(animatedValue, {
+                toValue: 0,
+                duration: 100,
+                useNativeDriver: false
+            }
+        ).start();
+        props.onPressIn && props.onPressIn(e);
+    }
+
+
     return (
-        <Pressable 
-            style={styles.button}
+        <Pressable
             {...props}
+            onPressIn={fadeIn} onPressOut={fadeOut}
         >
-            <Text style={styles.text}>{title}</Text>
+            <Animated.View style={{...styles.button, backgroundColor: color}}>
+                <Text style={styles.text}>{title}</Text>
+            </Animated.View>
         </Pressable>
     );
 };
@@ -18,7 +51,6 @@ export function Button({ title, ...props }: PressableProps & { title: string }) 
 const styles = StyleSheet.create({
     button: {
         height: 62,
-        backgroundColor: Colors.orange,
         borderRadius: Radius.r16,
         justifyContent: 'center',
         alignItems: 'center'
