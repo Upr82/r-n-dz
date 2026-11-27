@@ -1,9 +1,24 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Animated } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, FZ, FW } from '../tokens';
-import { Button } from '../components/button/button'
+import { Button } from '../components/button/button';
+import { useEffect, useRef } from 'react';
 
 export default function HomeScreen() {
+
+    const animatedText = useRef(new Animated.Value(-74)).current;
+
+    useEffect(() => {
+        const animeFunc = Animated.timing(animatedText, {
+            toValue: 0,
+            duration: 3000,
+            useNativeDriver: true
+        });
+
+        animeFunc.start();
+
+        return (() => animeFunc.stop());
+    }, [animatedText]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -15,9 +30,9 @@ export default function HomeScreen() {
                 />
             </View>
             <View style={styles.content}>
-                <Text style={styles.title}>
+                <Animated.Text style={{ ...styles.title, transform: [{ translateY: animatedText }] }}>
                     Одно из самых вкусных кофе в городе!
-                </Text>
+                </Animated.Text>
                 <Text style={styles.text}>
                     Свежие зёрна, настоящая арабика и бережная обжарка
                 </Text>
